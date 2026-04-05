@@ -2,7 +2,10 @@
   "name": "smooth-div-monorepo",
   "private": true,
   "scripts": {
-    "dev": "pnpm --filter site dev",
-    "build": "pnpm --filter site build"
+    "dev": "pnpm --filter smooth-div build && pnpm --parallel --filter smooth-div --filter site dev",
+    "build": "pnpm --filter smooth-div build && pnpm --filter site build",
+    "typecheck": "pnpm --filter site exec tsc --noEmit",
+    "pack:check": "pnpm --filter smooth-div exec npm pack --dry-run",
+    "check": "pnpm build && pnpm typecheck && pnpm pack:check"
   }
 }

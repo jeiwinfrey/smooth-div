@@ -1,9 +1,69 @@
 {
   "name": "smooth-div",
   "version": "0.0.1",
+  "description": "A framework-agnostic custom element for smooth, squircle-like containers.",
   "type": "module",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "author": "jeiwinfrey",
+  "homepage": "https://smooth-div.jeiwinfrey.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeiwinfrey/smooth-div.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jeiwinfrey/smooth-div/issues"
+  },
+  "keywords": [
+    "smooth-div",
+    "squircle",
+    "web-components",
+    "custom-element",
+    "rounded-corners",
+    "bezier",
+    "design-system",
+    "ios"
+  ],
+  "files": [
+    "dist",
+    "react.d.ts",
+    "preact.d.ts",
+    "solid.d.ts"
+  ],
+  "sideEffects": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -w -p tsconfig.build.json",
+    "prepublishOnly": "pnpm build"
+  },
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./react.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./preact": {
+      "types": "./preact.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./solid": {
+      "types": "./solid.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.2",
+    "typescript": "^5.9.3"
   }
 }
