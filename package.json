@@ -1,0 +1,8 @@
+{
+  "name": "smooth-div-monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter site dev",
+    "build": "pnpm --filter site build"
+  }
+}
