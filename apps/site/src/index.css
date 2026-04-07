@@ -1,1 +1,77 @@
 @import "tailwindcss";
+
+@layer base {
+  body {
+    margin: 0;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #fff;
+    color: #111;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .font-mono {
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+  }
+
+  .font-serif {
+    font-family: "Lora", Georgia, serif;
+  }
+}
+
+/* Playground slider — square track + square thumb, no border-radius anywhere */
+input[type="range"].sd-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    #111 0%,
+    #111 var(--pct, 50%),
+    #e4e4e4 var(--pct, 50%),
+    #e4e4e4 100%
+  );
+  outline: none;
+  cursor: pointer;
+  border-radius: 0;
+  display: block;
+}
+
+input[type="range"].sd-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #111;
+  cursor: grab;
+  border-radius: 0;
+}
+
+input[type="range"].sd-slider:active::-webkit-slider-thumb {
+  cursor: grabbing;
+}
+
+input[type="range"].sd-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: #111;
+  cursor: grab;
+  border: none;
+  border-radius: 0;
+}
+
+input[type="range"].sd-slider::-moz-range-track {
+  height: 2px;
+  background: #e4e4e4;
+  border-radius: 0;
+}
