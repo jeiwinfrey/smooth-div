@@ -80,6 +80,32 @@ All numeric attributes can be passed as strings in markup:
 
 The computed radius is clamped so it never exceeds half the smaller side.
 
+## CSS custom properties
+
+| Property | Type | Description |
+|---|---|---|
+| `--smooth-div-stroke-width` | `<number>` | Width of the squircle stroke in px (e.g. `2`) |
+| `--smooth-div-stroke-color` | `<color>` | Color of the squircle stroke |
+
+Both must be set for the stroke to render. The stroke follows the squircle clip path, so it always matches the shape exactly.
+
+```html
+<smooth-div
+  style="--smooth-div-stroke-width: 2; --smooth-div-stroke-color: #6366f1;"
+  class="w-64 h-32 bg-white p-4"
+>
+  Card with squircle border
+</smooth-div>
+```
+
+```css
+/* Tailwind arbitrary value syntax */
+.card {
+  --smooth-div-stroke-width: 1.5;
+  --smooth-div-stroke-color: theme(colors.indigo.400);
+}
+```
+
 ## Design notes
 
 The default `smoothness = 0.6` comes from the iOS 60 smoothing value in Figma.

@@ -55,14 +55,29 @@ function ensureBaseStyles(): void {
   const style = document.createElement("style")
   style.id = BASE_STYLE_ID
   style.textContent = `
+@layer smooth-div-defaults {
+  ${SMOOTH_DIV_TAG} {
+    display: block;
+  }
+}
+
 ${SMOOTH_DIV_TAG} {
-  display: block;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
 }
 
 ${SMOOTH_DIV_TAG}[hidden] {
-  display: none;
+  display: none !important;
+}
+
+${SMOOTH_DIV_TAG} > .smooth-div-stroke {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
 }
 `
 
@@ -159,6 +174,8 @@ export class SmoothDivElement extends HTMLElement {
   #frame = 0
   #resizeObserver?: ResizeObserver
   #handleWindowResize = () => this.scheduleUpdate()
+  #strokeSvg?: SVGSVGElement
+  #strokePath?: SVGPathElement
 
   get radius(): number | undefined {
     return readNumberAttribute(this, "radius")
@@ -199,6 +216,9 @@ export class SmoothDivElement extends HTMLElement {
 
   disconnectedCallback(): void {
     this.#resizeObserver?.disconnect()
+    this.#strokeSvg?.remove()
+    this.#strokeSvg = undefined
+    this.#strokePath = undefined
 
     if (typeof window !== "undefined") {
       window.removeEventListener("resize", this.#handleWindowResize)
@@ -230,17 +250,58 @@ export class SmoothDivElement extends HTMLElement {
 
     if (width <= 0 || height <= 0 || !supportsSmoothDivClipPath()) {
       clearClipPath(this.style)
+      this.#clearStroke()
       return
     }
 
-    setClipPath(
-      this.style,
-      squirclePath(width, height, {
-        radius: this.radius,
-        smoothness: this.smoothness,
-        multiplier: this.multiplier,
-      }),
-    )
+    const path = squirclePath(width, height, {
+      radius: this.radius,
+      smoothness: this.smoothness,
+      multiplier: this.multiplier,
+    })
+
+    setClipPath(this.style, path)
+    this.#updateStroke(width, height, path)
+  }
+
+  #updateStroke(width: number, height: number, path: string): void {
+    const strokeWidth = getComputedStyle(this).getPropertyValue("--smooth-div-stroke-width").trim()
+    const strokeColor = getComputedStyle(this).getPropertyValue("--smooth-div-stroke-color").trim()
+
+    const w = parseFloat(strokeWidth)
+
+    if (!strokeColor || !Number.isFinite(w) || w <= 0) {
+      this.#clearStroke()
+      return
+    }
+
+    if (!this.#strokeSvg) {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+      svg.setAttribute("aria-hidden", "true")
+      svg.classList.add("smooth-div-stroke")
+
+      const pathEl = document.createElementNS("http://www.w3.org/2000/svg", "path")
+      pathEl.setAttribute("fill", "none")
+      svg.appendChild(pathEl)
+
+      // Prepend so it sits behind content but is still subject to the parent clip-path.
+      // The stroke-width is doubled: clip-path removes the outer half, leaving only
+      // the inner half visible — a pixel-perfect squircle-shaped border.
+      this.prepend(svg)
+      this.#strokeSvg = svg
+      this.#strokePath = pathEl
+    }
+
+    this.#strokeSvg.setAttribute("viewBox", `0 0 ${width} ${height}`)
+    this.#strokePath!.setAttribute("d", path)
+    this.#strokePath!.setAttribute("stroke", strokeColor)
+    this.#strokePath!.setAttribute("stroke-width", String(w * 2))
+  }
+
+  #clearStroke(): void {
+    this.#strokeSvg?.remove()
+    this.#strokeSvg = undefined
+    this.#strokePath = undefined
   }
 
   private scheduleUpdate(): void {
