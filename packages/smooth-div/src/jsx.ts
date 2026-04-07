@@ -28,4 +28,13 @@ declare global {
   }
 }
 
+// Augment React.CSSProperties so --smooth-div-* custom properties get
+// IntelliSense when passed via style={{ ... }} in React/TSX.
+declare module "react" {
+  interface CSSProperties {
+    "--smooth-div-stroke-width"?: string | number
+    "--smooth-div-stroke-color"?: string
+  }
+}
+
 export {}

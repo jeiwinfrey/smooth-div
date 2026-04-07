@@ -19,5 +19,10 @@ declare module "solid-js" {
     interface IntrinsicElements {
       "smooth-div": HTMLAttributes<HTMLElement> & SmoothDivFrameworkProps
     }
+
+    interface CSSProperties {
+      "--smooth-div-stroke-width"?: string | number
+      "--smooth-div-stroke-color"?: string
+    }
   }
 }
