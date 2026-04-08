@@ -27,22 +27,14 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Build smooth-div package
-              run: pnpm --filter smooth-div build
+            - name: Build
+              run: pnpm --filter smooth-div build && pnpm --filter site build
 
             - name: Install Vercel CLI
               run: npm install -g vercel
 
-            - name: Build site via Vercel
-              run: vercel build --prod --yes --token ${{ secrets.VERCEL_TOKEN }}
-              working-directory: apps/site
-              env:
-                  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-                  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
             - name: Deploy to Vercel
-              run: vercel deploy --prod --yes --prebuilt --token ${{ secrets.VERCEL_TOKEN }}
-              working-directory: apps/site
+              run: vercel deploy apps/site/dist --prod --yes --token ${{ secrets.VERCEL_TOKEN }}
               env:
                   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
                   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
