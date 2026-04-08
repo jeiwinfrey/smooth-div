@@ -27,6 +27,14 @@
   .font-serif {
     font-family: "Lora", Georgia, serif;
   }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 /* Playground slider — square track + square thumb, no border-radius anywhere */

@@ -25,30 +25,37 @@ export function InstallSection() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <div className="flex flex-wrap gap-0.5">
-          {managers.map((m) => (
-            <smooth-div
-              key={m}
-              radius={8}
-              className={
-                active === m ? "bg-[#f1f1f1]" : "transition-colors hover:bg-black/[0.04]"
-              }
-            >
-              <button
-                type="button"
-                onClick={() => setActive(m)}
-                className={`cursor-pointer border-0 bg-transparent px-3 py-2 text-sm transition-colors ${
-                  active === m
-                    ? "font-medium text-black"
-                    : "text-[#8a8a8a] hover:text-black"
-                }`}
-              >
-                {m}
-              </button>
-            </smooth-div>
-          ))}
-        </div>
-        <CodeBlock lang="bash" code={installCommands[active]} />
+        <CodeBlock
+          lang="bash"
+          code={installCommands[active]}
+          actions={
+            <>
+              {managers.map((m) => (
+                <smooth-div
+                  key={m}
+                  radius={6}
+                  className={
+                    active === m
+                      ? "bg-[#f1f1f1]"
+                      : "transition-colors hover:bg-black/[0.04]"
+                  }
+                >
+                  <button
+                    type="button"
+                    onClick={() => setActive(m)}
+                    className={`cursor-pointer border-0 bg-transparent px-2.5 py-1 text-xs transition-colors ${
+                      active === m
+                        ? "font-semibold text-black"
+                        : "text-[#8a8a8a] hover:text-black"
+                    }`}
+                  >
+                    {m}
+                  </button>
+                </smooth-div>
+              ))}
+            </>
+          }
+        />
       </div>
 
       <div className="flex flex-col gap-4">

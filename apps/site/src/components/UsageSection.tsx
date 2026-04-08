@@ -71,30 +71,37 @@ export function UsageSection() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <div className="flex flex-wrap gap-0.5">
-          {frameworks.map((f) => (
-            <smooth-div
-              key={f}
-              radius={8}
-              className={
-                active === f ? "bg-[#f1f1f1]" : "transition-colors hover:bg-black/[0.04]"
-              }
-            >
-              <button
-                type="button"
-                onClick={() => setActive(f)}
-                className={`cursor-pointer border-0 bg-transparent px-3 py-2 text-sm transition-colors ${
-                  active === f
-                    ? "font-medium text-black"
-                    : "text-[#8a8a8a] hover:text-black"
-                }`}
-              >
-                {f}
-              </button>
-            </smooth-div>
-          ))}
-        </div>
-        <CodeBlock lang="jsx" code={snippets[active]} />
+        <CodeBlock
+          lang="jsx"
+          code={snippets[active]}
+          actions={
+            <>
+              {frameworks.map((f) => (
+                <smooth-div
+                  key={f}
+                  radius={6}
+                  className={
+                    active === f
+                      ? "bg-[#f1f1f1]"
+                      : "transition-colors hover:bg-black/[0.04]"
+                  }
+                >
+                  <button
+                    type="button"
+                    onClick={() => setActive(f)}
+                    className={`cursor-pointer border-0 bg-transparent px-2.5 py-1 text-xs transition-colors ${
+                      active === f
+                        ? "font-semibold text-black"
+                        : "text-[#8a8a8a] hover:text-black"
+                    }`}
+                  >
+                    {f}
+                  </button>
+                </smooth-div>
+              ))}
+            </>
+          }
+        />
       </div>
     </section>
   );

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+import { Highlight, themes } from "prism-react-renderer";
 
 interface CodeBlockProps {
   code: string;
   lang?: string;
+  actions?: ReactNode;
 }
 
-export function CodeBlock({ code, lang }: CodeBlockProps) {
+export function CodeBlock({ code, lang, actions }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
   function copy() {
@@ -18,17 +20,16 @@ export function CodeBlock({ code, lang }: CodeBlockProps) {
   return (
     <div className="flex flex-col gap-2.5">
       <smooth-div
-        className={`flex w-full items-center gap-4 bg-white px-4 py-2.5 shadow-sm md:px-5 ${lang ? "justify-between" : "justify-end"}`}
+        radius={8}
+        className="flex w-full items-center justify-between gap-4 bg-white px-2 py-1.5 shadow-sm md:px-3"
       >
-        {lang ? (
-          <span className="min-w-0 truncate font-mono text-xs font-medium uppercase tracking-wider text-[#a0a0a0]">
-            {lang}
-          </span>
-        ) : null}
+        <div className="flex flex-1 items-center gap-0.5 overflow-x-auto no-scrollbar">
+          {actions}
+        </div>
         <button
           type="button"
           onClick={copy}
-          className="flex shrink-0 cursor-pointer items-center gap-1.5 border-0 bg-transparent px-1 py-0.5 text-xs font-medium text-[#8a8a8a] transition-colors hover:text-black"
+          className="flex shrink-0 cursor-pointer items-center gap-1.5 border-0 bg-transparent px-2 py-1 text-xs font-medium text-[#8a8a8a] transition-colors hover:text-black"
           aria-label="Copy code"
         >
           {copied ? (
@@ -71,9 +72,28 @@ export function CodeBlock({ code, lang }: CodeBlockProps) {
       </smooth-div>
 
       <smooth-div radius={12} className="block w-full bg-[#fafafa]">
-        <pre className="overflow-x-auto p-4 text-sm leading-relaxed text-black font-mono md:p-5">
-          <code>{code}</code>
-        </pre>
+        <Highlight
+          theme={themes.github}
+          code={code}
+          language={(lang as any) || "tsx"}
+        >
+          {({ className, style, tokens, getLineProps, getTokenProps }) => (
+            <pre
+              className={`overflow-x-auto p-4 text-sm leading-relaxed font-mono md:p-5 ${className}`}
+              style={{ ...style, backgroundColor: "transparent" }}
+            >
+              <code>
+                {tokens.map((line, i) => (
+                  <div key={i} {...getLineProps({ line })}>
+                    {line.map((token, key) => (
+                      <span key={key} {...getTokenProps({ token })} />
+                    ))}
+                  </div>
+                ))}
+              </code>
+            </pre>
+          )}
+        </Highlight>
       </smooth-div>
     </div>
   );

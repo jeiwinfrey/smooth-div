@@ -85,10 +85,10 @@ export function Playground({ onBack }: PlaygroundProps) {
       </header>
 
       {/* Body */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 flex-col md:flex-row overflow-hidden">
         {/* Canvas */}
         <div
-          className="flex flex-1 items-center justify-center overflow-hidden"
+          className="flex flex-1 md:flex-auto min-h-[40vh] md:min-h-0 items-center justify-center overflow-hidden"
           style={{
             backgroundColor: "#fafafa",
             backgroundImage:
@@ -127,7 +127,7 @@ export function Playground({ onBack }: PlaygroundProps) {
         </div>
 
         {/* Controls panel */}
-        <aside className="w-68 shrink-0 overflow-y-auto border-l border-[#f0f0f0] bg-white">
+        <aside className="w-full md:w-68 shrink-0 overflow-y-auto border-t md:border-t-0 md:border-l border-[#f0f0f0] bg-white flex-1 md:flex-none">
           <div className="flex flex-col gap-0 divide-y divide-[#f0f0f0]">
             {/* Code snippet */}
             <div className="p-4">
