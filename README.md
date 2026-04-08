@@ -2,6 +2,10 @@
 
 A framework-agnostic custom element for smooth, squircle-like containers.
 
+[![npm version](https://img.shields.io/npm/v/smooth-div)](https://www.npmjs.com/package/smooth-div)
+[![npm downloads](https://img.shields.io/npm/dm/smooth-div)](https://www.npmjs.com/package/smooth-div)
+[![license](https://img.shields.io/npm/l/smooth-div)](./LICENSE)
+
 `smooth-div` gives you a `<smooth-div>` element that behaves like a normal container, works with regular CSS and utility classes, and falls back gracefully when a browser cannot render the full squircle path.
 
 ## Install
@@ -50,9 +54,11 @@ Then use it like a normal container:
 
 ## Docs
 
+- npm: [npmjs.com/package/smooth-div](https://www.npmjs.com/package/smooth-div)
 - Package docs: [`packages/smooth-div/README.md`](packages/smooth-div/README.md)
 - Repo: [github.com/jeiwinfrey/smooth-div](https://github.com/jeiwinfrey/smooth-div)
 - Site: [smooth-div.jeiwinfrey.com](https://smooth-div.jeiwinfrey.com)
+- Changelog: [`CHANGELOG.md`](CHANGELOG.md)
 
 ## Monorepo
 

@@ -1,6 +1,12 @@
 # smooth-div
 
+[![npm](https://img.shields.io/npm/v/smooth-div)](https://www.npmjs.com/package/smooth-div)
+
 A framework-agnostic custom element for smooth, squircle-like containers.
+
+- 📦 [npm](https://www.npmjs.com/package/smooth-div)
+- 🌐 [smooth-div.jeiwinfrey.com](https://smooth-div.jeiwinfrey.com)
+- 📁 [github.com/jeiwinfrey/smooth-div](https://github.com/jeiwinfrey/smooth-div)
 
 ## Install
 
