@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { ComparisonOverlap } from "./components/ComparisonOverlap";
 import { ShowcaseGrid } from "./components/ShowcaseGrid";
 import { InstallSection } from "./components/InstallSection";
@@ -85,7 +86,12 @@ export default function App() {
   const isPlayground = pathname === "/playground";
 
   if (isPlayground) {
-    return <Playground onBack={() => navigate("/")} />;
+    return (
+      <>
+        <Playground onBack={() => navigate("/")} />
+        <Analytics />
+      </>
+    );
   }
 
   return (
@@ -232,6 +238,7 @@ export default function App() {
           </div>
         </div>
       </div>
+      <Analytics />
     </main>
   );
 }
