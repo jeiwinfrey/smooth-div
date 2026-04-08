@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd ../.. && pnpm --filter smooth-div build && pnpm --filter site build",
+  "outputDirectory": "dist",
+  "framework": "vite"
+}
